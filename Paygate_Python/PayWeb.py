@@ -8,7 +8,7 @@ __author__ = 'kwesidev'
 
 class PayGateWeb(object):
 
-    #paygate server url
+    # paygate server url
     PAY_HOST_SERVER_URL = 'https://secure.paygate.co.za/payweb3/initiate.trans'
 
     def __init__(self,paygate_id,pay_gate_secret,reference,amount,return_url,email,notify_url):
@@ -30,7 +30,6 @@ class PayGateWeb(object):
         self.__email = email
         self.__notify_url = notify_url
         self.__pay_gate_secret = pay_gate_secret
-
         self.__transaction_date = str(datetime.datetime.now())[:19]
 
     def do_request(self):
@@ -53,42 +52,39 @@ class PayGateWeb(object):
         req_params['EMAIL'] = self.__email 
         req_params['NOTIFY_URL'] = self.__notify_url
        
-        #encoded_params = urllib.parse.urlencode(req_params).encode()
-        #check sum of the parameters
+        # encoded_params = urllib.parse.urlencode(req_params).encode()
+        # check sum of the parameters
         req_value_string = ""
         for key,value in req_params.items():
             req_value_string += str(value) 
         
-        #modify string to remove some values and add paygate secret key
+        # modify string to remove some values and add paygate secret key
         req_value_string = req_value_string.replace(')','').replace('(','').replace(',','').replace("'","") + str(self.__pay_gate_secret)
 
         print(req_value_string)
         print('=====================')
         check_sum = hashlib.md5(req_value_string.encode()).hexdigest()
         print(check_sum)
-        #store the calculated checksum value
+        # store the calculated checksum value
         req_params["CHECKSUM"] = check_sum
          
-        #makes request to the actual paygate web host and get response if error occurs stop 
-        try:
-            post_req = requests.post(self.PAY_HOST_SERVER_URL,data = req_params)
-            #raise error 
-            post_req.raise_for_status()
-            result = post_req.text
-            #if error is recieved while checking the values throw exception
-            if result.startswith("ERROR") :
-                raise Exception(result)
+        # makes request to the actual paygate web host and get response if error occurs stop 
+        post_req = requests.post(self.PAY_HOST_SERVER_URL,data = req_params)
+        # raise error 
+        post_req.raise_for_status()
+        result = post_req.text
+        # if error is recieved while checking the values throw exception
+        if result.startswith("ERROR") :
+            raise ValueError(result)
 
-            #return in dictionary format
-            dict_res = {}
-            for val in result.split('&') :
-                val = val.split('=')
-                dict_res[str(val[0])] = str(val[1])
+        # return in dictionary format
+        dict_res = {}
+        for val in result.split('&') :
+            val = val.split('=')
+            dict_res[str(val[0])] = str(val[1])
+        return dict_res        
             return dict_res        
-
-        except Exception as e:
-            print(e)
-    
+        return dict_res        
 
     @staticmethod
     def processPayment():
@@ -111,7 +107,10 @@ def main():
         html_output.write('</body>')
         html_output.write('</html>')
 
-    #show user the payment screen
-    webbrowser.open(HTML_PAGE)
+            # show user the payment screen
+            webbrowser.open(HTML_PAGE)
+    except Exception as e:
+        print(e)
+            
 if __name__ == '__main__':
     main()
