@@ -35,7 +35,7 @@ class PayGateWeb(object):
     def do_request(self):
         """
         Method  to send request to Paygate and get some values back ,
-        this values will be to redirect the user to Paygate Web to make payment
+        this values will be used to redirect the user to Paygate Web to make payment
         :param None
         :throws Exception 
         :return PAYGATE_ID,PAY_REQUEST_ID,REFERENCE,CHECKSUM
@@ -73,7 +73,7 @@ class PayGateWeb(object):
         # raise error 
         post_req.raise_for_status()
         result = post_req.text
-        # if error is recieved while checking the values throw exception
+        # if error is received while checking the values throw exception
         if result.startswith("ERROR") :
             raise ValueError(result)
 
