@@ -82,9 +82,7 @@ class PayGateWeb(object):
         for val in result.split('&') :
             val = val.split('=')
             dict_res[str(val[0])] = str(val[1])
-        return dict_res        
-            return dict_res        
-        return dict_res        
+        return dict_res            
 
     @staticmethod
     def processPayment():
@@ -92,25 +90,25 @@ class PayGateWeb(object):
 
 def main():
     print('TESTING PAYGATE WEB')
-    
-    payment = PayGateWeb("10011072130","secret","REF-103",40,"http://xdevcloud.tk","willzako@aol.com","http://apps.xdevcloud.tk/gateway/notify_payment")
-    payment_request = payment.do_request()
-    HTML_PAGE = 'paygate.html'
-    with open(HTML_PAGE,'w') as html_output :
+    try:
+        payment = PayGateWeb("10011072130","secret","REF-103",40,"http://v.xdevcloud.tk/PaymentProcessor/PaygateReturn","willzako@aol.com","http://v.xdevcloud.tk/PaymentProcessor/PaygateNotify")
+        payment_request = payment.do_request()
+        HTML_PAGE = 'paygate.html'
+        with open(HTML_PAGE,'w') as html_output :
 
-        html_output.write("<html><head><title>Welcome to My Vps hosting</title></head>")
-        html_output.write('<body onload="document.getElementById(\'form1\').submit()">')
-        html_output.write('<form action="https://secure.paygate.co.za/payweb3/process.trans" method="POST" id="form1" >')
-        html_output.write('<input type="hidden" name="PAY_REQUEST_ID"value="'+ payment_request['PAY_REQUEST_ID'] +'">')
-        html_output.write('<input type="hidden" name="CHECKSUM" value="'+payment_request['CHECKSUM']+'">')
-        html_output.write('</form>')
-        html_output.write('</body>')
-        html_output.write('</html>')
+            html_output.write("<html><head><title>Welcome to My Vps hosting</title></head>")
+            html_output.write('<body onload="document.getElementById(\'form1\').submit()">')
+            html_output.write('<form action="https://secure.paygate.co.za/payweb3/process.trans" method="POST" id="form1" >')
+            html_output.write('<input type="hidden" name="PAY_REQUEST_ID"value="'+ payment_request['PAY_REQUEST_ID'] +'">')
+            html_output.write('<input type="hidden" name="CHECKSUM" value="'+payment_request['CHECKSUM']+'">')
+            html_output.write('</form>')
+            html_output.write('</body>')
+            html_output.write('</html>')
 
             # show user the payment screen
             webbrowser.open(HTML_PAGE)
     except Exception as e:
         print(e)
-            
+
 if __name__ == '__main__':
     main()
