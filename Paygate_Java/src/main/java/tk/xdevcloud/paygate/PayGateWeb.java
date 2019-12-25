@@ -71,7 +71,7 @@ public class PayGateWeb {
 		this.amount = (int) (amount * 100);
 		this.emailAddress = emailAddress;
 		this.notifyUrl = notifyUrl;
-		this.notifyUrl = returnUrl;
+		this.returnUrl = returnUrl;
 
 	}
 
