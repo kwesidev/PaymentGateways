@@ -10,10 +10,10 @@ plugins {
     // Apply the java plugin to add support for Java
     id 'java'
 
-    // Apply the application plugin to add support for building a CLI application.
-    id 'application'
-    
+    // war plugin
+    id 'war'
     id 'eclipse'
+    id "org.gretty" version "3.0.1"
 }
 
 java {
@@ -32,17 +32,17 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.0-jre'
-
+   
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
 
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
-}
-
-application {
-    // Define the main class for the application.
-    mainClassName = 'tk.xdevcloud.paygate.App'
+    
+    // servlet 
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    // jdbc postgresql
+    implementation 'org.postgresql:postgresql:42.2.9'
 }
 
 test {
