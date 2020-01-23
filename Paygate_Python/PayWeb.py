@@ -9,7 +9,7 @@ __author__ = 'kwesidev'
 class PayGateWeb(object):
 
     # paygate server url
-    PAY_HOST_SERVER_URL = 'https://secure.paygate.co.za/payweb3/initiate.trans'
+    PAY_WEB_SERVER_URL = 'https://secure.paygate.co.za/payweb3/initiate.trans'
 
     def __init__(self,paygate_id,pay_gate_secret,reference,amount,return_url,email,notify_url):
         """"
@@ -55,7 +55,7 @@ class PayGateWeb(object):
         # encoded_params = urllib.parse.urlencode(req_params).encode()
         # check sum of the parameters
         req_value_string = ""
-        for key,value in req_params.items():
+        for _ ,value in req_params.items():
             req_value_string += str(value) 
         
         # modify string to remove some values and add paygate secret key
@@ -69,7 +69,7 @@ class PayGateWeb(object):
         req_params["CHECKSUM"] = check_sum
          
         # makes request to the actual paygate web host and get response if error occurs stop 
-        post_req = requests.post(self.PAY_HOST_SERVER_URL,data = req_params)
+        post_req = requests.post(self.PAY_WEB_SERVER_URL,data = req_params)
         # raise error 
         post_req.raise_for_status()
         result = post_req.text
@@ -91,7 +91,7 @@ class PayGateWeb(object):
 def main():
     print('TESTING PAYGATE WEB')
     try:
-        payment = PayGateWeb("10011072130","secret","REF-103",40,"http://v.xdevcloud.tk/PaymentProcessor/PaygateReturn","willzako@aol.com","http://v.xdevcloud.tk/PaymentProcessor/PaygateNotify")
+        payment = PayGateWeb("10011072130","secret","REF-103",40,"http://v.xdevcloud.tk:2020/PayGate/PaygateReturn","willzako@aol.com","http://v.xdevcloud.tk:2020/PayGate/PaygateNotify")
         payment_request = payment.do_request()
         HTML_PAGE = 'paygate.html'
         with open(HTML_PAGE,'w') as html_output :
