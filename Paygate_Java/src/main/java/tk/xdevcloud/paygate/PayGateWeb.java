@@ -103,22 +103,22 @@ public class PayGateWeb {
 		PayGateWebResult payGateResult = new PayGateWebResult();
 
 		try {
-			// init the request
+			// Init the request
 			url = new URL(PAYGATE_WEB_URL);
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
-			// we making a form post
+			// We making a form post
 			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 			String requestData = "";
-			// request Values without spaces
+			// Request Values without spaces
 			String requestValues = "";
 
-			// date format for transaction date
+			// Date format for transaction date
 			LocalDateTime localDate = LocalDateTime.now();
 			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm::ss");
 
-			// request data to be posted
+			// Request data to be posted
 			Map<String, String> requestMap = new LinkedHashMap<String, String>();
 			requestMap.put("PAYGATE_ID", this.payGateID.trim());
 			requestMap.put("REFERENCE", this.reference.trim());
@@ -131,38 +131,38 @@ public class PayGateWeb {
 			requestMap.put("EMAIL", this.emailAddress.trim());
 			requestMap.put("NOTIFY_URL", this.notifyUrl.trim());
 
-			// build a form string and string to calculate checksum
+			// Build a form string and string to calculate checksum
 			for (Map.Entry<String, String> reqValue : requestMap.entrySet()) {
 
 				requestData += (String.format("%s=%s&", reqValue.getKey(),
 						URLEncoder.encode(reqValue.getValue(), "UTF-8")));
 				requestValues += reqValue.getValue();
 			}
-			// add secret key to requestValues
+			// Add secret key to requestValues
 			requestValues += this.payGateSecret.trim();
 			MessageDigest checksum = MessageDigest.getInstance("MD5");
 
 			checksum.update(requestValues.toString().getBytes("UTF-8"));
-			// convert the calculate data to hex
+			// Convert the calculate data to hex
 			String checkSumHash = DatatypeConverter.printHexBinary(checksum.digest()).toString();
 
-			// add it to the requestData
+			// Add it to the requestData
 			requestData += "CHECKSUM=" + checkSumHash;
 			System.out.println(requestData);
 
-			// sets request content length
+			// Sets request content length
 			conn.setRequestProperty("Content-Length", String.valueOf(requestData.length()));
 			conn.setRequestMethod("POST");
 			HttpURLConnection.setFollowRedirects(true);
 
-			// writes request to connection
+			// Writes request to connection
 			streamWriter = new OutputStreamWriter(conn.getOutputStream());
 			streamWriter.write(requestData.toString());
 			streamWriter.flush();
 
-			// display response from server
-			// headers and actual response from PayGate
-			// for debugging purposes can be commented out
+			// Display response from server
+			// Headers and actual response from PayGate
+			// For debugging purposes can be commented out
 			for (Map.Entry<String, List<String>> headerFields : conn.getHeaderFields().entrySet()) {
 
 				System.out.println(headerFields.getKey() + " " + headerFields.getValue());
@@ -185,12 +185,12 @@ public class PayGateWeb {
 			int count = 0;
 			System.out.println(responseData.toString());
 			for (String res : responseData.toString().split("&")) {
-				// get equal sign position and copy the values
+				// Get equal sign position and copy the values
 				int equalPos = res.indexOf("=");
 				payGateResultValues[count] = res.substring(equalPos + 1, res.length());
 				count++;
 			}
-			// save the result into the PayGateWebResult Object
+			// Save the result into the PayGateWebResult Object
 			payGateResult.setPayGateId(payGateResultValues[0]).setPayRequestId(payGateResultValues[1])
 					.setReference(payGateResultValues[2]).setChecksum(payGateResultValues[3]);
 		} catch (MalformedURLException e) {
@@ -206,7 +206,7 @@ public class PayGateWeb {
 
 			e.printStackTrace();
 		}
-		// free resource
+		// Free resource
 		finally {
 			if (streamWriter != null) {
 				try {

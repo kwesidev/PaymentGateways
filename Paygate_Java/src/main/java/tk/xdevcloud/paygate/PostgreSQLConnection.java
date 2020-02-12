@@ -24,7 +24,7 @@ public class PostgreSQLConnection {
 		Connection conn = null;
 		String user, password, database;
 		Integer port;
-		// load the database config
+		// Load the database config
 
 		user = (String) Config.getValue("pgsql.username");
 		password = (String) Config.getValue("pgsql.password");
@@ -32,9 +32,9 @@ public class PostgreSQLConnection {
 		port = Integer.valueOf((String)Config.getValue("pgsql.port"));
 
 		try {
-			// load postgresql driver
+			// Load postgresql driver
 			Class.forName("org.postgresql.Driver");
-			// connect to pgsql
+			// Connect to pgsql
 			conn = DriverManager.getConnection("jdbc:postgresql://localhost:" + String.valueOf(port) + "/" + database,
 					user, password);
 

@@ -28,9 +28,9 @@ public class Helper {
 		queryString.append("result_code,auth_code,currency,amount,result_description,transaction_id,");
 		queryString.append("risk_indicator,pay_method,pay_method_detail,date_time) ");
 		queryString.append("VALUES(?,?,?,?,?,?,?,?,?,?,?,?,NOW());");
-		// init connection
+		// Init connection
 		try (Connection pgSQLConn = PostgreSQLConnection.getConnection()) {
-			// prepare statement to be executed
+			// Prepare statement to be executed
 			try (PreparedStatement paymentInfoStatement = pgSQLConn.prepareStatement(queryString.toString())) {
 
 				paymentInfoStatement.setString(1, payGateResult.getPayRequestId()); // PAY_REQUEST_ID
@@ -45,7 +45,7 @@ public class Helper {
 				paymentInfoStatement.setString(10, payGateResult.getRiskIndicator()); // RISK INDICATOR
 				paymentInfoStatement.setString(11, payGateResult.getPayMethod()); // PAYMENT METHOD
 				paymentInfoStatement.setString(12, payGateResult.getPayMethodDetail()); // PAYMENT_METHOD_DETAIL
-				// if executed without any errors
+				// If executed without any errors
 				if (paymentInfoStatement.execute()) {
 					System.out.println("Saved");
 

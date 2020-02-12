@@ -28,7 +28,7 @@ public class PayGateReturnServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		try{
-			//get transaction status and determine the description
+			// Get transaction status and determine the description
 			int transactionStatusCode = Integer.parseInt(request.getParameter("TRANSACTION_STATUS"));
 			response.getWriter().println(Helper.convertTransactionCodeToDescription(transactionStatusCode));	
 			

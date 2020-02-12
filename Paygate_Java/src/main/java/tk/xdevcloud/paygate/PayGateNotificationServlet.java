@@ -51,7 +51,7 @@ public class PayGateNotificationServlet extends HttpServlet {
 			String payMethodDetail = request.getParameter("PAY_METHOD_DETAIL");
 			String paygateChecksum = request.getParameter("CHECKSUM");
 
-			// get the request values concatenated string and must be in order according to
+			// Get the request values concatenated string and must be in order according to
 			// PayGate docs
 
 			StringBuffer requestConcatValues = new StringBuffer();
@@ -61,15 +61,15 @@ public class PayGateNotificationServlet extends HttpServlet {
 					.append(String.valueOf(transactionId)).append(riskIndicator).append(payMethod)
 					.append(payMethodDetail);
 
-			// calculate the check sum
+			// Calculate the check sum
 			MessageDigest digest = MessageDigest.getInstance("MD5");
-			// gets PayGate secret
+			// Gets PayGate secret
 			String payGateSecret = (String) Config.getValue("paygate_secret");
 			requestConcatValues.append(payGateSecret);
 			digest.update(requestConcatValues.toString().getBytes());
 			String checkSum = DatatypeConverter.printHexBinary(digest.digest()).toString().toLowerCase();
-			// security check
-			// verify that request actually came from PayGate
+			// Security check
+			// Verify that request actually came from PayGate
 			if ((!payGateId.equals((String) Config.getValue("paygate_id")) || (!checkSum.equals(paygateChecksum)))) {
 
 				throw new ForbiddenException("Access Denied");
@@ -90,20 +90,20 @@ public class PayGateNotificationServlet extends HttpServlet {
 			payGateResult.setPayMethodDetail(payMethodDetail);
 
 			Helper.saveTransactions(payGateResult);
-			// respond back to PayGate server that everything went well
+			// Respond back to PayGate server that everything went well
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.getWriter().println("OKAY");
 		}
 
 		catch (ForbiddenException exception) {
-			// throw 403 when request not coming from PayGate
+			// Throw 403 when request not coming from PayGate
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			response.getWriter().println(exception.getMessage());
 
 		}
 
 		catch (Exception exception) {
-			// throw 500 for other errors
+			// Throw 500 for other errors
 			exception.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			response.getWriter().println("Internal Server Error");

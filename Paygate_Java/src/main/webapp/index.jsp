@@ -9,9 +9,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
 </head>
 
  <% 
-     // init values
+     // Init values
      
-     // generate random values
+     // Generate random values
      SecureRandom random = new SecureRandom();
      random.setSeed(random.generateSeed(20));
     

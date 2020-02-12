@@ -8,7 +8,7 @@ __author__ = 'kwesidev'
 
 class PayGateWeb(object):
 
-    # paygate server url
+    # Paygate server url
     PAY_WEB_SERVER_URL = 'https://secure.paygate.co.za/payweb3/initiate.trans'
 
     def __init__(self,paygate_id,pay_gate_secret,reference,amount,return_url,email,notify_url):
@@ -52,28 +52,28 @@ class PayGateWeb(object):
         req_params['EMAIL'] = self.__email 
         req_params['NOTIFY_URL'] = self.__notify_url
        
-        # encoded_params = urllib.parse.urlencode(req_params).encode()
-        # check sum of the parameters
+        # Encoded_params = urllib.parse.urlencode(req_params).encode()
+        # Check sum of the parameters
         req_value_string = ""
         for _ ,value in req_params.items():
             req_value_string += str(value) 
         
-        # modify string to remove some values and add paygate secret key
+        # Modify string to remove some values and add paygate secret key
         req_value_string = req_value_string.replace(')','').replace('(','').replace(',','').replace("'","") + str(self.__pay_gate_secret)
 
         print(req_value_string)
         print('=====================')
         check_sum = hashlib.md5(req_value_string.encode()).hexdigest()
         print(check_sum)
-        # store the calculated checksum value
+        # Store the calculated checksum value
         req_params["CHECKSUM"] = check_sum
          
-        # makes request to the actual paygate web host and get response if error occurs stop 
+        # Makes request to the actual paygate web host and get response if error occurs stop 
         post_req = requests.post(self.PAY_WEB_SERVER_URL,data = req_params)
-        # raise error 
+        # Raise error 
         post_req.raise_for_status()
         result = post_req.text
-        # if error is received while checking the values throw exception
+        # If error is received while checking the values throw exception
         if result.startswith("ERROR") :
             raise ValueError(result)
 
@@ -105,7 +105,7 @@ def main():
             html_output.write('</body>')
             html_output.write('</html>')
 
-            # show user the payment screen
+            # Show user the payment screen
             webbrowser.open(HTML_PAGE)
     except Exception as e:
         print(e)
