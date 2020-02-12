@@ -1,14 +1,14 @@
 <%@ page import="tk.xdevcloud.paygate.PayGateWeb,
 tk.xdevcloud.paygate.PayGateWebResult,tk.xdevcloud.paygate.Config,
 java.security.SecureRandom"
-contentType="text/html;charset=UTF-8" language="java" %>
+	contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Payment Gate Web Example</title>
+<title>PayGate Web Example</title>
 </head>
 
- <% 
+<% 
      // Init values
      
      // Generate random values
@@ -26,17 +26,23 @@ contentType="text/html;charset=UTF-8" language="java" %>
      PayGateWebResult paygateWebResult = new PayGateWeb(payGateId,payGateSecret,reference,amount,emailAddress,notifyURL,returnURL).doRequest();
  %>
 
-  <div align="center">
-	<p>Order Number : <%= reference %></p>
+<div align="center">
+	<p>
+		Order Number :
+		<%= reference %></p>
+		<p>Amount Due: <%= String.format("%.2f",amount) %> </p> 
 	<button onclick="document.form1.submit();">Pay With PayGate</button>
-  </div>
-  
-  
-  <form action="https://secure.paygate.co.za/payweb3/process.trans" method="POST"  name="form1">
-    <input type="hidden" name="PAY_REQUEST_ID" value="<%= paygateWebResult.getPayRequestId() %>">
-    <input type="hidden" name="CHECKSUM" value="<%= paygateWebResult.getChecksum()%>">
-    
-  </form>
+</div>
+
+
+<form action="https://secure.paygate.co.za/payweb3/process.trans"
+	method="POST" name="form1">
+	<input type="hidden" name="PAY_REQUEST_ID"
+		value="<%= paygateWebResult.getPayRequestId() %>"> <input
+		type="hidden" name="CHECKSUM"
+		value="<%= paygateWebResult.getChecksum()%>">
+
+</form>
 </body>
 
 </html>
