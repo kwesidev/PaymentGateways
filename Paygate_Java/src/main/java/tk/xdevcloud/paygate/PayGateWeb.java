@@ -23,7 +23,8 @@ import java.time.format.DateTimeFormatter;
  * @author kwesidev
  */
 public class PayGateWeb {
-	// merchant Details
+	// Merchant Details
+	
 	private String payGateID;
 	private String payGateSecret;
 	private String reference;
@@ -32,61 +33,29 @@ public class PayGateWeb {
 	private String returnUrl;
 	private String notifyUrl;
 
+	private PaymentMethod paymentMethod;
 	private static final String PAYGATE_WEB_URL = "https://secure.paygate.co.za/payweb3/initiate.trans";
 
-	private enum PaymentMethod {
-		CC("cc"), EFT("eft");
-
-		private String code;
-
-		PaymentMethod(String code) {
-			this.code = code;
-		}
-
-		public String getCode() {
-
-			return code;
-		}
-	}
-
 	/**
-	 * Constructor
+	 * Private constructor
 	 * 
-	 * @param payGateId     assigned by PayGate
-	 * @param payGateSecret
-	 * @param reference     This is your reference number for use by your internal
-	 *                      systems
-	 * @param amount        Transaction amount in cents. e.g. 32.99 is specified as
-	 *                      3299
-	 * @param emailAddres   customer email
-	 * @param notifyUrl     if payment is completed result will be posted to this
-	 *                      url
+	 * @param payGateWebBuilder
 	 */
-	public PayGateWeb(String payGateId, String payGateSecret, String reference, Double amount, String emailAddress,
-			String notifyUrl, String returnUrl) {
+	private PayGateWeb(PayGateWebBuilder payGateWebBuilder) {
 
-		this.payGateID = payGateId;
-		this.payGateSecret = payGateSecret;
-		this.reference = reference;
-		this.amount = (int) (amount * 100);
-		this.emailAddress = emailAddress;
-		this.notifyUrl = notifyUrl;
-		this.returnUrl = returnUrl;
+		this.payGateID = payGateWebBuilder.payGateID;
+		this.payGateSecret = payGateWebBuilder.payGateSecret;
+		this.reference = payGateWebBuilder.reference;
+		// Transaction amount in cents. e.g. 32.99 is specified as 3299
+		this.amount = (int) (payGateWebBuilder.amount * 100);
+		this.emailAddress = payGateWebBuilder.emailAddress;
+		this.notifyUrl = payGateWebBuilder.notifyUrl;
+		this.returnUrl = payGateWebBuilder.returnUrl;
+		this.paymentMethod = payGateWebBuilder.paymentMethod;
 
 	}
 
-	public PayGateWeb() {
-
-		this.payGateID = "10011072130";
-		this.payGateSecret = "secret";
-		this.reference = "testing";
-		this.amount = 900;
-		this.emailAddress = "willzako@aol.com";
-		this.notifyUrl = "https://apps.xdevcloud.tk/gateway/notify_payment";
-		this.returnUrl = "http://xdevcloud.tk";
-	}
-
-	// getters and settters left out
+	// getters and setters left out
 
 	/**
 	 * Makes request to PayPagte Engine EndPoint so that the return values can be
@@ -230,6 +199,125 @@ public class PayGateWeb {
 
 		}
 		return payGateResult;
+	}
+
+	public static class PayGateWebBuilder {
+
+		private String payGateID;
+		private String payGateSecret;
+		private String reference;
+		private double amount;
+		private String emailAddress;
+		private String returnUrl;
+		private String notifyUrl;
+		private PaymentMethod paymentMethod;
+
+		/**
+		 * Setter for PayGate Id
+		 * 
+		 * @param payGateId The Paygate Id issued by PayGate
+		 * @return this
+		 */
+		public PayGateWebBuilder payGateId(String payGateId) {
+
+			this.payGateID = payGateId;
+			return this;
+		}
+
+		/**
+		 * Setter for Paygate secret
+		 * 
+		 * @param payGateSecret The Paygate Secret issued by PayGate
+		 * @return this
+		 */
+		public PayGateWebBuilder payGateSecret(String payGateSecret) {
+			this.payGateSecret = payGateSecret;
+			return this;
+		}
+
+		/**
+		 * Setter for reference
+		 * 
+		 * @param reference The reference number for use by your internal systems
+		 * @retun this
+		 */
+		public PayGateWebBuilder reference(String reference) {
+
+			this.reference = reference;
+			return this;
+		}
+
+		/**
+		 * Setter for amount
+		 * 
+		 * @param amount The amount the be charged
+		 * @return this
+		 */
+
+		public PayGateWebBuilder amount(double amount) {
+
+			this.amount = amount;
+			return this;
+		}
+
+		/**
+		 * Setter for emailAddress
+		 * 
+		 * @param emailAddress The Email Address of the Payer
+		 * @return this
+		 */
+		public PayGateWebBuilder emailAddress(String emailAddress) {
+			this.emailAddress = emailAddress;
+			return this;
+		}
+
+		/**
+		 * Setter for return Url
+		 * 
+		 * @param returnUrl The return URL to redirect when payment is processed
+		 * @return this
+		 */
+
+		public PayGateWebBuilder returnUrl(String returnUrl) {
+
+			this.returnUrl = returnUrl;
+			return this;
+		}
+
+		/**
+		 * Setter for notify url
+		 * 
+		 * @param notifyUrl The notify URL ,this is optional
+		 * @return this
+		 */
+
+		public PayGateWebBuilder notifyUrl(String notifyUrl) {
+
+			this.notifyUrl = notifyUrl;
+			return this;
+		}
+		/**
+		 * 
+		 * @param payMethod The type of Payment to accept,this field is optional
+		 * @return
+		 */
+	    public PayGateWebBuilder paymentMethod(PaymentMethod payMethod) {
+	    	
+	    	this.paymentMethod = payMethod;
+	    	return this;
+	    }
+
+		/**
+		 * Build the Paygate object
+		 * 
+		 * @return PayGateWeb object
+		 */
+		public PayGateWeb build() {
+
+			return new PayGateWeb(this);
+
+		}
+
 	}
 
 }
