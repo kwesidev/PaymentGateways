@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class PayGateWeb {
 	// Merchant Details
-	
+
 	private String payGateID;
 	private String payGateSecret;
 	private String reference;
@@ -296,16 +296,17 @@ public class PayGateWeb {
 			this.notifyUrl = notifyUrl;
 			return this;
 		}
+
 		/**
 		 * 
 		 * @param payMethod The type of Payment to accept,this field is optional
 		 * @return
 		 */
-	    public PayGateWebBuilder paymentMethod(PaymentMethod payMethod) {
-	    	
-	    	this.paymentMethod = payMethod;
-	    	return this;
-	    }
+		public PayGateWebBuilder paymentMethod(PaymentMethod payMethod) {
+
+			this.paymentMethod = payMethod;
+			return this;
+		}
 
 		/**
 		 * Build the Paygate object

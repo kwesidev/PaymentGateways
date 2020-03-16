@@ -1,13 +1,9 @@
 package tk.xdevcloud.paygate;
 
 public enum PaymentMethod {
-	
-	CREDIT_CARD("CC"), 
-	BANK_TRANSFER("BT"),
-	DEBIT_CARD("DC"),
-	PREPAID_CARD("PC"),
-	CASH_VOUCHER("CV");
-	
+
+	CREDIT_CARD("CC"), BANK_TRANSFER("BT"), DEBIT_CARD("DC"), PREPAID_CARD("PC"), CASH_VOUCHER("CV");
+
 	private String code;
 
 	PaymentMethod(String code) {
