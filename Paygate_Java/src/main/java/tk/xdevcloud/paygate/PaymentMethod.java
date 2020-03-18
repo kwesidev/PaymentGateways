@@ -10,7 +10,7 @@ public enum PaymentMethod {
 		this.code = code;
 	}
 
-	public String getCode() {
+	public String toString() {
 
 		return code;
 	}
