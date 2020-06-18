@@ -8,19 +8,16 @@ java.security.SecureRandom"
 <head>
 <title>PayGate Web Example</title>
 </head>
-
 <%
 	// Init values
-
 	// Generate random values
 	SecureRandom random = new SecureRandom();
 	random.setSeed(random.generateSeed(20));
-
 	String returnURL = (String) Config.getValue("return_url"); // Load return url from config
 	String notifyURL = (String) Config.getValue("notify_url"); // Lad notify url from config
 	String payGateId = (String) Config.getValue("paygate_id"); // PayGate ID  provided by PayGate
 	String payGateSecret = (String) Config.getValue("paygate_secret"); // PayGate secret for calculating checksums
-
+    // Send details to paygate web for processing 
 	double amount = 400.5 + random.nextDouble(); // Price of the item 
 	String emailAddress = "willzako@aol.com"; // Email address of the payer
 	String reference = "ORD_" + random.nextInt(5000); // such as order id, invoice id etc  
@@ -29,7 +26,6 @@ java.security.SecureRandom"
 			.returnUrl(returnURL).build();
 	PayGateWebResult paygateWebResult = payweb.doRequest();
 %>
-
 <div align="center">
 	<p>
 		Order Number :
@@ -41,7 +37,6 @@ java.security.SecureRandom"
 	<button onclick="document.form1.submit();">Pay With PayGate</button>
 </div>
 
-
 <form action="https://secure.paygate.co.za/payweb3/process.trans"
 	method="POST" name="form1">
 	<input type="hidden" name="PAY_REQUEST_ID"
@@ -51,5 +46,4 @@ java.security.SecureRandom"
 
 </form>
 </body>
-
 </html>

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "PayGateReturn", urlPatterns = "PayGateReturn", loadOnStartup = 1)
 public class PayGateReturnServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -21,17 +20,14 @@ public class PayGateReturnServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		try{
 			// Get transaction status and determine the description
 			int transactionStatusCode = Integer.parseInt(request.getParameter("TRANSACTION_STATUS"));
 			response.getWriter().println(Helper.convertTransactionCodeToDescription(transactionStatusCode));	
-			
 		}
 		catch(Exception e ) {
 			e.printStackTrace();

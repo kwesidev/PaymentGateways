@@ -20,8 +20,6 @@ public class Helper {
 	 * @throws IOException
 	 */
 	public static void saveTransactions(PayGateResult payGateResult) throws SQLException, IOException {
-
-
 		StringBuffer queryString = new StringBuffer();
 		// build a query string
 		queryString.append("INSERT INTO paygate_transactions(pay_request_id,reference,transaction_status,");
@@ -63,7 +61,6 @@ public class Helper {
 	 * @return
 	 */
 	public static String convertTransactionCodeToDescription(int code) {
-
 		String description = "";
 
 		switch (code) {
@@ -103,7 +100,6 @@ public class Helper {
 	 * @return
 	 */
 	public static String[] splitResult(String responseData) {
-
 		return Arrays.stream(responseData.split("&")).map(e -> e.substring(e.indexOf("=") + 1, e.length()))
 				.toArray(String[]::new);
 

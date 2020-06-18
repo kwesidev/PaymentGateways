@@ -16,11 +16,9 @@ public class Config {
 	 * @throws IOException
 	 */
 	public static Object getValue(String key)  throws IOException{
-		
 		Properties prop = new Properties();
 		prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties"));
 		return prop.get(key);
-		
 	}
 
 }

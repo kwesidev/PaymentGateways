@@ -5,15 +5,13 @@ package tk.xdevcloud.paygate;
  *
  */
 public class PayGateWebResult {
-	
+	// Details
 	private String payGateId;
 	private String checksum;
 	private String payRequestId;
 	private String reference;
 	
-	
 	public PayGateWebResult() {
-		
 		this.payGateId = "";
 		this.checksum = "";
 		this.payRequestId = "";

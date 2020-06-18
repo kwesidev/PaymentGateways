@@ -11,7 +11,6 @@ public enum PaymentMethod {
 	}
 
 	public String toString() {
-
 		return code;
 	}
 }

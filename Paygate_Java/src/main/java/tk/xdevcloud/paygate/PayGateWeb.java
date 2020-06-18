@@ -24,7 +24,6 @@ import java.time.format.DateTimeFormatter;
  */
 public class PayGateWeb {
 	// Merchant Details
-
 	private String payGateID;
 	private String payGateSecret;
 	private String reference;
@@ -32,7 +31,6 @@ public class PayGateWeb {
 	private String emailAddress;
 	private String returnUrl;
 	private String notifyUrl;
-
 	private PaymentMethod paymentMethod;
 	private static final String PAYGATE_WEB_URL = "https://secure.paygate.co.za/payweb3/initiate.trans";
 
@@ -42,7 +40,6 @@ public class PayGateWeb {
 	 * @param payGateWebBuilder
 	 */
 	private PayGateWeb(PayGateWebBuilder payGateWebBuilder) {
-
 		this.payGateID = payGateWebBuilder.payGateID;
 		this.payGateSecret = payGateWebBuilder.payGateSecret;
 		this.reference = payGateWebBuilder.reference;
@@ -168,11 +165,9 @@ public class PayGateWeb {
 
 		catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
-
 		}
 
 		catch (IOException e) {
-
 			e.printStackTrace();
 		}
 		// Free resource
@@ -180,9 +175,7 @@ public class PayGateWeb {
 			if (streamWriter != null) {
 				try {
 					streamWriter.close();
-				}
-
-				catch (IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -202,7 +195,6 @@ public class PayGateWeb {
 	}
 
 	public static class PayGateWebBuilder {
-
 		private String payGateID;
 		private String payGateSecret;
 		private String reference;
@@ -219,7 +211,6 @@ public class PayGateWeb {
 		 * @return this
 		 */
 		public PayGateWebBuilder payGateId(String payGateId) {
-
 			this.payGateID = payGateId;
 			return this;
 		}
@@ -242,7 +233,6 @@ public class PayGateWeb {
 		 * @retun this
 		 */
 		public PayGateWebBuilder reference(String reference) {
-
 			this.reference = reference;
 			return this;
 		}
@@ -255,7 +245,6 @@ public class PayGateWeb {
 		 */
 
 		public PayGateWebBuilder amount(double amount) {
-
 			this.amount = amount;
 			return this;
 		}
@@ -279,7 +268,6 @@ public class PayGateWeb {
 		 */
 
 		public PayGateWebBuilder returnUrl(String returnUrl) {
-
 			this.returnUrl = returnUrl;
 			return this;
 		}
@@ -303,7 +291,6 @@ public class PayGateWeb {
 		 * @return
 		 */
 		public PayGateWebBuilder paymentMethod(PaymentMethod payMethod) {
-
 			this.paymentMethod = payMethod;
 			return this;
 		}
@@ -314,11 +301,8 @@ public class PayGateWeb {
 		 * @return PayGateWeb object
 		 */
 		public PayGateWeb build() {
-
 			return new PayGateWeb(this);
-
 		}
-
 	}
 
 }

@@ -5,7 +5,7 @@ package tk.xdevcloud.paygate;
  * @author kwesidev
  */
 public class PayGateResult {
-
+    // Details
 	private String payRequestId;
 	private String reference;
 	private Integer transactionStatus;

@@ -50,10 +50,8 @@ public class PayGateNotificationServlet extends HttpServlet {
 			String payMethod = request.getParameter("PAY_METHOD");
 			String payMethodDetail = request.getParameter("PAY_METHOD_DETAIL");
 			String paygateChecksum = request.getParameter("CHECKSUM");
-
 			// Get the request values concatenated string and must be in order according to
 			// PayGate docs
-
 			StringBuffer requestConcatValues = new StringBuffer();
 			requestConcatValues.append(payGateId).append(payRequestId).append(reference)
 					.append(String.valueOf(transactionStatus)).append(String.valueOf(resultCode)).append(authCode)
@@ -99,7 +97,6 @@ public class PayGateNotificationServlet extends HttpServlet {
 			// Throw 403 when request not coming from PayGate
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			response.getWriter().println(exception.getMessage());
-
 		}
 
 		catch (Exception exception) {
@@ -110,5 +107,4 @@ public class PayGateNotificationServlet extends HttpServlet {
 		}
 
 	}
-
 }

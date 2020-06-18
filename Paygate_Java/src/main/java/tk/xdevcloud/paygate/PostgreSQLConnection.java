@@ -20,7 +20,6 @@ public class PostgreSQLConnection {
 	 * @return Connection
 	 */
 	public static Connection getConnection() throws IOException, SQLException {
-
 		Connection conn = null;
 		String user, password, database;
 		Integer port;
