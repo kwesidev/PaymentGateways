@@ -16,11 +16,11 @@ class PayGateWeb(object):
           constructor
           :param paygate_id unique id given by paygate
           :param paygate_secret for encryption
-          :param reference This is your reference number for use by your internal systems
+          :param reference This is your reference number, use by your internal systems
           :param amount Transaction amount in cents. e.g. 32.99 is specified as 3299
           :param return_url  Once the transaction is completed, PayWeb will return the customer to a page on your web site. The page the customer must see is specified in this field
-          :param email the person making the transaction
-          :param notify_url if payment is succesful paygate will post back "Post Data" ,so the merchant can mark the order as processed
+          :param email The person making the transaction
+          :param notify_url If payment is succesful paygate will post back "Post Data" ,so the merchant can mark the order as processed
           :return::
         """
         self.__paygate_id = paygate_id
