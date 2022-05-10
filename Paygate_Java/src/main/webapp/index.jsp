@@ -1,6 +1,5 @@
 <%@ page
-	import="tk.xdevcloud.paygate.PayGateWeb,
-tk.xdevcloud.paygate.PayGateWebResult,tk.xdevcloud.paygate.Config,
+	import="com.github.kwesidev.paygate.PayGateWeb,com.github.kwesidev.paygate.PayGateWebResult,com.github.kwesidev.paygate.Config,
 java.security.SecureRandom"
 	contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
