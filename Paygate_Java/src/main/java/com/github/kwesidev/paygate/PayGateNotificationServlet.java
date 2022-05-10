@@ -1,5 +1,4 @@
-package tk.xdevcloud.paygate;
-
+package com.github.kwesidev.paygate;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
 import java.security.MessageDigest;
 import javax.xml.bind.DatatypeConverter;
-
 /**
  * Servlet implementation class PayGateNotify
  *
@@ -25,7 +23,6 @@ public class PayGateNotificationServlet extends HttpServlet {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -33,7 +30,6 @@ public class PayGateNotificationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-
 			response.setContentType("text/plain");
 			// get the request values from PayGate
 			String payGateId = request.getParameter("PAYGATE_ID");
@@ -86,25 +82,21 @@ public class PayGateNotificationServlet extends HttpServlet {
 			payGateResult.setRiskIndicator(riskIndicator);
 			payGateResult.setPayMethod(payMethod);
 			payGateResult.setPayMethodDetail(payMethodDetail);
-
 			Helper.saveTransactions(payGateResult);
 			// Respond back to PayGate server that everything went well
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.getWriter().println("OKAY");
 		}
-
 		catch (ForbiddenException exception) {
 			// Throw 403 when request not coming from PayGate
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			response.getWriter().println(exception.getMessage());
 		}
-
 		catch (Exception exception) {
 			// Throw 500 for other errors
 			exception.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			response.getWriter().println("Internal Server Error");
 		}
-
 	}
 }

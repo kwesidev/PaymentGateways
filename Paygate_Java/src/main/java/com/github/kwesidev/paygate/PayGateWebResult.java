@@ -1,4 +1,4 @@
-package tk.xdevcloud.paygate;
+package com.github.kwesidev.paygate;
 /**
  * 
  * @author kwesidev
@@ -86,5 +86,4 @@ public class PayGateWebResult {
 		this.reference = reference;
 		return this;
 	}
-
 }

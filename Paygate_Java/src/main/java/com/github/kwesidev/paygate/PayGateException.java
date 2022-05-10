@@ -1,8 +1,6 @@
-package tk.xdevcloud.paygate;
-
+package com.github.kwesidev.paygate;
 @SuppressWarnings("serial")
 public class PayGateException extends Exception{
-	
 	/**
 	 * PayGateException
 	 * @param message

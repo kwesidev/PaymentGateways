@@ -1,4 +1,4 @@
-package tk.xdevcloud.paygate;
+package com.github.kwesidev.paygate;
 
 /*
  * This class holds the response data sent by PayGate after completing the transactions

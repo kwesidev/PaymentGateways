@@ -1,5 +1,4 @@
-package tk.xdevcloud.paygate;
-
+package com.github.kwesidev.paygate;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.security.MessageDigest;
@@ -33,7 +32,6 @@ public class PayGateWeb {
 	private String notifyUrl;
 	private PaymentMethod paymentMethod;
 	private static final String PAYGATE_WEB_URL = "https://secure.paygate.co.za/payweb3/initiate.trans";
-
 	/**
 	 * Private constructor
 	 * 
@@ -49,25 +47,19 @@ public class PayGateWeb {
 		this.notifyUrl = payGateWebBuilder.notifyUrl;
 		this.returnUrl = payGateWebBuilder.returnUrl;
 		this.paymentMethod = payGateWebBuilder.paymentMethod;
-
 	}
-
 	// getters and setters left out
-
 	/**
 	 * Makes request to PayPagte Engine EndPoint so that the return values can be
 	 * use to redirect customer to PayGate web to make payment return
 	 * PayGateWebResult
 	 */
-
 	public PayGateWebResult doRequest() throws PayGateException {
-
 		URL url = null;
 		HttpURLConnection conn = null;
 		OutputStreamWriter streamWriter = null;
 		BufferedReader buffReader = null;
 		PayGateWebResult payGateResult = new PayGateWebResult();
-
 		try {
 			// Init the request
 			url = new URL(PAYGATE_WEB_URL);
@@ -79,11 +71,9 @@ public class PayGateWeb {
 			String requestData = "";
 			// Request Values without spaces
 			String requestValues = "";
-
 			// Date format for transaction date
 			LocalDateTime localDate = LocalDateTime.now();
 			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm::ss");
-
 			// Request data to be posted
 			Map<String, String> requestMap = new LinkedHashMap<String, String>();
 			requestMap.put("PAYGATE_ID", this.payGateID.trim());
@@ -96,10 +86,8 @@ public class PayGateWeb {
 			requestMap.put("COUNTRY", "ZAF");
 			requestMap.put("EMAIL", this.emailAddress.trim());
 			requestMap.put("NOTIFY_URL", this.notifyUrl.trim());
-
 			// Build a form string and string to calculate checksum
 			for (Map.Entry<String, String> reqValue : requestMap.entrySet()) {
-
 				requestData += (String.format("%s=%s&", reqValue.getKey(),
 						URLEncoder.encode(reqValue.getValue(), "UTF-8")));
 				requestValues += reqValue.getValue();
@@ -107,42 +95,33 @@ public class PayGateWeb {
 			// Add secret key to requestValues
 			requestValues += this.payGateSecret.trim();
 			MessageDigest checksum = MessageDigest.getInstance("MD5");
-
 			checksum.update(requestValues.toString().getBytes("UTF-8"));
 			// Convert the calculate data to hex
 			String checkSumHash = DatatypeConverter.printHexBinary(checksum.digest()).toString();
-
 			// Add it to the requestData
 			requestData += "CHECKSUM=" + checkSumHash;
 			System.out.println(requestData);
-
 			// Sets request content length
 			conn.setRequestProperty("Content-Length", String.valueOf(requestData.length()));
 			conn.setRequestMethod("POST");
 			HttpURLConnection.setFollowRedirects(true);
-
 			// Writes request to connection
 			streamWriter = new OutputStreamWriter(conn.getOutputStream());
 			streamWriter.write(requestData.toString());
 			streamWriter.flush();
-
 			// Display response from server
 			// Headers and actual response from PayGate
 			// For debugging purposes can be commented out
 			for (Map.Entry<String, List<String>> headerFields : conn.getHeaderFields().entrySet()) {
-
 				System.out.println(headerFields.getKey() + " " + headerFields.getValue());
 			}
-
 			buffReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			StringBuffer responseData = new StringBuffer();
 			String oneLine = "";
 			while ((oneLine = buffReader.readLine()) != null) {
-
 				responseData.append(oneLine);
 			}
 			if (responseData.toString().startsWith("ERROR")) {
-
 				throw new PayGateException(responseData.toString());
 			}
 			// Paygate is returned in this format so it needs to be split
@@ -162,11 +141,9 @@ public class PayGateWeb {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-
 		catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-
 		catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -179,21 +156,17 @@ public class PayGateWeb {
 					e.printStackTrace();
 				}
 			}
-
 			if (buffReader != null) {
 				try {
-
 					buffReader.close();
 				} catch (IOException e) {
-
 					e.printStackTrace();
 				}
 			}
-
 		}
 		return payGateResult;
 	}
-
+	
 	public static class PayGateWebBuilder {
 		private String payGateID;
 		private String payGateSecret;
@@ -203,7 +176,6 @@ public class PayGateWeb {
 		private String returnUrl;
 		private String notifyUrl;
 		private PaymentMethod paymentMethod;
-
 		/**
 		 * Setter for PayGate Id
 		 * 
@@ -214,7 +186,6 @@ public class PayGateWeb {
 			this.payGateID = payGateId;
 			return this;
 		}
-
 		/**
 		 * Setter for Paygate secret
 		 * 
@@ -225,7 +196,6 @@ public class PayGateWeb {
 			this.payGateSecret = payGateSecret;
 			return this;
 		}
-
 		/**
 		 * Setter for reference
 		 * 
@@ -236,19 +206,16 @@ public class PayGateWeb {
 			this.reference = reference;
 			return this;
 		}
-
 		/**
 		 * Setter for amount
 		 * 
 		 * @param amount The amount the be charged
 		 * @return this
 		 */
-
 		public PayGateWebBuilder amount(double amount) {
 			this.amount = amount;
 			return this;
 		}
-
 		/**
 		 * Setter for emailAddress
 		 * 
@@ -259,7 +226,6 @@ public class PayGateWeb {
 			this.emailAddress = emailAddress;
 			return this;
 		}
-
 		/**
 		 * Setter for return Url
 		 * 
@@ -271,20 +237,17 @@ public class PayGateWeb {
 			this.returnUrl = returnUrl;
 			return this;
 		}
-
 		/**
 		 * Setter for notify url
 		 * 
 		 * @param notifyUrl The notify URL ,this is optional
 		 * @return this
 		 */
-
 		public PayGateWebBuilder notifyUrl(String notifyUrl) {
 
 			this.notifyUrl = notifyUrl;
 			return this;
 		}
-
 		/**
 		 * 
 		 * @param payMethod The type of Payment to accept,this field is optional

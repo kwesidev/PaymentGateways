@@ -1,4 +1,4 @@
-package tk.xdevcloud.paygate;
+package com.github.kwesidev.paygate;
 @SuppressWarnings("serial")
 public class ForbiddenException extends Exception {
 	

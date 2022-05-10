@@ -1,4 +1,4 @@
-package tk.xdevcloud.paygate;
+package com.github.kwesidev.paygate;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

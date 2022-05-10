@@ -1,10 +1,9 @@
-package tk.xdevcloud.paygate;
+package com.github.kwesidev.paygate;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.io.IOException;
-
 /**
  * 
  * PostgreSQL DB Connection Class
@@ -12,7 +11,6 @@ import java.io.IOException;
  * @author kwesidev
  */
 public class PostgreSQLConnection {
-
 	/**
 	 * establish postgreSQL connection instance that can be used through the
 	 * application
@@ -24,24 +22,19 @@ public class PostgreSQLConnection {
 		String user, password, database;
 		Integer port;
 		// Load the database config
-
 		user = (String) Config.getValue("pgsql.username");
 		password = (String) Config.getValue("pgsql.password");
 		database = (String) Config.getValue("pgsql.database");
 		port = Integer.valueOf((String)Config.getValue("pgsql.port"));
-
 		try {
 			// Load postgresql driver
 			Class.forName("org.postgresql.Driver");
 			// Connect to pgsql
 			conn = DriverManager.getConnection("jdbc:postgresql://localhost:" + String.valueOf(port) + "/" + database,
 					user, password);
-
 		} catch (ClassNotFoundException exception) {
-
 			exception.printStackTrace();
 		}
-
 		return conn;
 	}
 }

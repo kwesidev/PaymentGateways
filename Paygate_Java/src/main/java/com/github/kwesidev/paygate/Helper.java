@@ -1,4 +1,4 @@
-package tk.xdevcloud.paygate;
+package com.github.kwesidev.paygate;
 
 import java.util.Arrays;
 import java.sql.Connection;

@@ -1,4 +1,4 @@
-package tk.xdevcloud.paygate;
+package com.github.kwesidev.paygate;
 
 import java.util.Properties;
 import java.io.IOException;
@@ -8,7 +8,6 @@ import java.io.IOException;
  *
  */
 public class Config {
-	
 	/**
 	 * Method to get config values
 	 * @param key String
@@ -20,5 +19,4 @@ public class Config {
 		prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties"));
 		return prop.get(key);
 	}
-
 }
