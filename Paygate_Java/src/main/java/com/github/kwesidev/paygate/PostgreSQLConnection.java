@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.io.IOException;
+
 /**
  * 
  * PostgreSQL DB Connection Class
@@ -12,7 +13,7 @@ import java.io.IOException;
  */
 public class PostgreSQLConnection {
 	/**
-	 * establish postgreSQL connection instance that can be used through the
+	 * Establish postgreSQL connection instance that can be used through the
 	 * application
 	 * 
 	 * @return Connection
