@@ -1,6 +1,6 @@
 <%@ page
 	import="com.github.kwesidev.paygate.PayGateWeb,com.github.kwesidev.paygate.PayGateWebResult,com.github.kwesidev.paygate.Config,
-java.security.SecureRandom"
+java.security.SecureRandom,com.github.kwesidev.paygate.PaymentMethod"
 	contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html>
@@ -20,9 +20,16 @@ java.security.SecureRandom"
 	double amount = 400.5 + random.nextDouble(); // Price of the item 
 	String emailAddress = "willzako@aol.com"; // Email address of the payer
 	String reference = "ORD_" + random.nextInt(5000); // such as order id, invoice id etc  
-	PayGateWeb payweb = new PayGateWeb.PayGateWebBuilder().reference(reference).amount(amount)
-			.emailAddress(emailAddress).payGateId(payGateId).payGateSecret(payGateSecret).notifyUrl(notifyURL)
-			.returnUrl(returnURL).build();
+	PayGateWeb payweb = new PayGateWeb.PayGateWebBuilder()
+	        .reference(reference)
+			.amount(amount)
+			.emailAddress(emailAddress)
+			.payGateId(payGateId)
+			.payGateSecret(payGateSecret)
+			//.paymentMethod(PaymentMethod.CREDIT_CARD)
+			.notifyUrl(notifyURL)
+			.returnUrl(returnURL)
+			.build();
 	PayGateWebResult paygateWebResult = payweb.doRequest();
 %>
 <div align="center">

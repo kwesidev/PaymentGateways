@@ -15,7 +15,6 @@ import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.DatatypeConverter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 /**
  * PayGate Web Implementation
  * 
@@ -85,6 +84,9 @@ public class PayGateWeb {
 			requestMap.put("LOCALE", "en-ZA");
 			requestMap.put("COUNTRY", "ZAF");
 			requestMap.put("EMAIL", this.emailAddress.trim());
+			if (this.paymentMethod != null) {
+				requestMap.put("PAY_METHOD",this.paymentMethod.toString());
+			} 
 			requestMap.put("NOTIFY_URL", this.notifyUrl.trim());
 			// Build a form string and string to calculate checksum
 			for (Map.Entry<String, String> reqValue : requestMap.entrySet()) {
